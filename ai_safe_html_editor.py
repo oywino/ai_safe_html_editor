@@ -92,6 +92,19 @@ APP_HTML = r"""
       gap: 8px;
     }
 
+    .app-version {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: #f3f4f6;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      user-select: none;
+    }
+
     .toolbar-separator {
       width: 1px;
       align-self: stretch;
@@ -350,6 +363,9 @@ APP_HTML = r"""
       <button id="safe-tab-top">Safe Structure Mode</button>
       <button id="visual-tab-top">True WYSIWYG Mode</button>
     </div>
+    <div class="toolbar-group">
+      <span id="app-version" class="app-version">v0.1.1</span>
+    </div>
   </div>
 
   <div id="modebar">
@@ -407,6 +423,7 @@ APP_HTML = r"""
         'area','base','br','col','embed','hr','img','input','link','meta','source','track','wbr'
       ]);
 
+      const APP_VERSION = '0.1.1';
       const state = {
         currentMode: 'safe',
         currentPath: null,
@@ -433,6 +450,7 @@ APP_HTML = r"""
         frame: document.getElementById('visual-frame'),
         statusLeft: document.getElementById('status-left'),
         statusRight: document.getElementById('status-right'),
+        appVersion: document.getElementById('app-version'),
         contextMenu: document.getElementById('context-menu'),
       };
 
@@ -608,6 +626,12 @@ APP_HTML = r"""
         }
         if (typeof right === 'string') {
           els.statusRight.textContent = right;
+        }
+      }
+
+      function updateVersionBadge() {
+        if (els.appVersion) {
+          els.appVersion.textContent = `v${APP_VERSION}`;
         }
       }
 
@@ -1325,6 +1349,7 @@ APP_HTML = r"""
           setStatus('Ready.', 'No file loaded.');
         }
 
+        updateVersionBadge();
         state.startupComplete = true;
       }
 

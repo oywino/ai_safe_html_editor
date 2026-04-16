@@ -817,27 +817,19 @@ APP_HTML = r"""
       }
 
       function createPendingXmlOpenMarker(doc, tagName, depth) {
-        const section = doc.createElement('section');
-        section.className = `node pending-open level-${Math.min(depth, 6)}`;
-        section.dataset.tag = tagName;
-
-        const openRow = doc.createElement('div');
-        openRow.className = 'tag-row';
-        const openName = doc.createElement('span');
-        openName.className = 'tag-name';
-        openName.textContent = `<${tagName}>`;
-        openRow.appendChild(openName);
-
-        const hint = doc.createElement('div');
-        hint.className = 'children';
-        const textHint = doc.createElement('div');
-        textHint.className = 'text intro';
-        textHint.textContent = 'Opening tag inserted. Place the cursor where the closing tag should be and choose Close XML Tag.';
-        hint.appendChild(textHint);
-
-        section.appendChild(openRow);
-        section.appendChild(hint);
-        return section;
+        const marker = doc.createElement('span');
+        marker.className = `pending-open level-${Math.min(depth, 6)}`;
+        marker.dataset.tag = tagName;
+        marker.textContent = `<${tagName}>`;
+        marker.style.display = 'inline-block';
+        marker.style.padding = '2px 6px';
+        marker.style.border = '1px dashed #95b8e1';
+        marker.style.borderRadius = '8px';
+        marker.style.background = 'rgba(234, 243, 255, 0.75)';
+        marker.style.fontFamily = 'ui-monospace, Consolas, monospace';
+        marker.style.fontSize = '0.92em';
+        marker.style.color = '#184f84';
+        return marker;
       }
 
       function isRangeAfterNode(range, node) {
@@ -846,7 +838,7 @@ APP_HTML = r"""
       }
 
       function getPendingOpenMarker(doc) {
-        return doc.querySelector('section.pending-open[data-tag]');
+        return doc.querySelector('.pending-open[data-tag]');
       }
 
       function getVisualInsertDepth(range, doc) {

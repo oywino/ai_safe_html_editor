@@ -490,7 +490,56 @@ APP_HTML = r"""
 
       function serializeHtmlDocument(doc, preferredDoctype) {
         const doctype = preferredDoctype || doctypeToString(doc);
-        return doctype + '\n' + doc.documentElement.outerHTML;
+        return doctype + '\n' + serializeNode(doc.documentElement, 0);
+      }
+
+      function serializeNode(node, indent) {
+        const indentText = ' '.repeat(indent || 0);
+
+        if (node.nodeType === Node.COMMENT_NODE) {
+          return indentText + '<!--' + (node.nodeValue || '') + '-->\n';
+        }
+
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.nodeValue || '';
+          if (!text.trim()) {
+            return '';
+          }
+          return indentText + escapeHtml(text) + '\n';
+        }
+
+        if (node.nodeType !== Node.ELEMENT_NODE) {
+          return '';
+        }
+
+        const tag = node.tagName.toLowerCase();
+        const attrs = Array.from(node.attributes)
+          .map((attr) => `${attr.name}="${escapeAttribute(attr.value)}"`)
+          .join(' ');
+        const attrText = attrs ? ' ' + attrs : '';
+        const opening = `<${tag}${attrText}>`;
+        const closing = VOID_HTML_TAGS.has(tag) ? '' : `</${tag}>`;
+
+        const childHtml = Array.from(node.childNodes)
+          .map((child) => serializeNode(child, indent + 2))
+          .join('');
+
+        if (VOID_HTML_TAGS.has(tag)) {
+          return indentText + opening + '\n';
+        }
+
+        if (!childHtml.trim()) {
+          return indentText + opening + closing + '\n';
+        }
+
+        if (node.childNodes.length === 1 && node.childNodes[0].nodeType === Node.TEXT_NODE) {
+          const text = node.childNodes[0].nodeValue || '';
+          if (!text.includes('\n')) {
+            return indentText + opening + escapeHtml(text) + closing + '\n';
+          }
+        }
+
+        return indentText + opening + '\n' + childHtml + indentText + closing + '\n';
       }
 
       function blankDocumentHtml() {
@@ -756,7 +805,7 @@ APP_HTML = r"""
       }
 
       function promptForXmlTag() {
-        const name = window.prompt('Enter XML tag name (letters, digits, hyphen, underscore):', 'new_tag');
+        const name = window.prompt('Enter XML tag name (letters, digits, hyphen, underscore, dot):', 'new_tag');
         if (!name) {
           return null;
         }
@@ -766,6 +815,73 @@ APP_HTML = r"""
           return null;
         }
         return trimmed;
+      }
+
+      function getVisualInsertDepth(range, doc) {
+        let node = range.commonAncestorContainer;
+        if (node.nodeType !== Node.ELEMENT_NODE) {
+          node = node.parentElement;
+        }
+        while (node && node !== doc.body) {
+          if (node.classList && node.classList.contains('node')) {
+            const match = node.className.match(/level-(\d+)/);
+            const depth = match ? parseInt(match[1], 10) : 0;
+            return Math.min(depth + 1, 6);
+          }
+          node = node.parentElement;
+        }
+        return 0;
+      }
+
+      function createXmlTagBlock(doc, tagName, contents, depth) {
+        const section = doc.createElement('section');
+        section.className = 'node';
+        section.dataset.tag = tagName;
+
+        section.classList.add(`level-${Math.min(depth, 6)}`);
+
+        const openRow = doc.createElement('div');
+        openRow.className = 'tag-row';
+        const openName = doc.createElement('span');
+        openName.className = 'tag-name';
+        openName.textContent = `<${tagName}>`;
+        openRow.appendChild(openName);
+
+        const children = doc.createElement('div');
+        children.className = 'children';
+
+        const textBlock = doc.createElement('div');
+        textBlock.className = 'text';
+        textBlock.contentEditable = 'true';
+
+        if (contents && contents.hasChildNodes()) {
+          const containsNestedNodes = Array.from(contents.childNodes).some((node) => node.nodeType === Node.ELEMENT_NODE && node.classList.contains('node'));
+          if (containsNestedNodes) {
+            children.appendChild(contents);
+          } else {
+            if (!contents.textContent.trim()) {
+              textBlock.innerHTML = '<br>';
+            } else {
+              textBlock.appendChild(contents);
+            }
+            children.appendChild(textBlock);
+          }
+        } else {
+          textBlock.innerHTML = '<br>';
+          children.appendChild(textBlock);
+        }
+
+        const closingRow = doc.createElement('div');
+        closingRow.className = 'tag-row closing';
+        const closeName = doc.createElement('span');
+        closeName.className = 'tag-name';
+        closeName.textContent = `</${tagName}>`;
+        closingRow.appendChild(closeName);
+
+        section.appendChild(openRow);
+        section.appendChild(children);
+        section.appendChild(closingRow);
+        return section;
       }
 
       function refreshSafeStructureFromVisual() {
@@ -791,38 +907,30 @@ APP_HTML = r"""
         }
 
         const selection = doc.getSelection();
-        if (!selection) {
-          return;
-        }
-
-        if (selection.rangeCount === 0) {
+        if (!selection || selection.rangeCount === 0) {
           return;
         }
 
         const range = selection.getRangeAt(0);
-        const tagElement = doc.createElement(tagName);
-        tagElement.style.display = 'block';
-        tagElement.style.minHeight = '1.2em';
-        tagElement.style.padding = '4px';
+        const contents = doc.createDocumentFragment();
+        const depth = getVisualInsertDepth(range, doc);
 
         if (!range.collapsed) {
-          const contents = range.extractContents();
-          tagElement.appendChild(contents);
-          range.insertNode(tagElement);
-          selection.removeAllRanges();
-          const newRange = doc.createRange();
-          newRange.selectNodeContents(tagElement);
-          selection.addRange(newRange);
-        } else {
-          const filler = doc.createElement('br');
-          tagElement.appendChild(filler);
-          range.insertNode(tagElement);
-          selection.removeAllRanges();
-          const newRange = doc.createRange();
-          newRange.setStart(tagElement, 0);
-          newRange.collapse(true);
-          selection.addRange(newRange);
+          contents.appendChild(range.extractContents());
         }
+
+        const tagBlock = createXmlTagBlock(doc, tagName, contents, depth);
+        range.insertNode(tagBlock);
+
+        selection.removeAllRanges();
+        const newRange = doc.createRange();
+        const editableContent = tagBlock.querySelector('.text');
+        if (editableContent) {
+          newRange.selectNodeContents(editableContent);
+        } else {
+          newRange.selectNodeContents(tagBlock);
+        }
+        selection.addRange(newRange);
 
         setDirty(true);
         refreshSafeStructureFromVisual();

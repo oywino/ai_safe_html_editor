@@ -415,6 +415,7 @@ APP_HTML = r"""
         visualReady: false,
         lastVisualLoadToken: 0,
         startupComplete: false,
+        pendingXmlTag: null,
       };
 
       const els = {
@@ -815,6 +816,39 @@ APP_HTML = r"""
         return trimmed;
       }
 
+      function createPendingXmlOpenMarker(doc, tagName, depth) {
+        const section = doc.createElement('section');
+        section.className = `node pending-open level-${Math.min(depth, 6)}`;
+        section.dataset.tag = tagName;
+
+        const openRow = doc.createElement('div');
+        openRow.className = 'tag-row';
+        const openName = doc.createElement('span');
+        openName.className = 'tag-name';
+        openName.textContent = `<${tagName}>`;
+        openRow.appendChild(openName);
+
+        const hint = doc.createElement('div');
+        hint.className = 'children';
+        const textHint = doc.createElement('div');
+        textHint.className = 'text intro';
+        textHint.textContent = 'Opening tag inserted. Place the cursor where the closing tag should be and choose Close XML Tag.';
+        hint.appendChild(textHint);
+
+        section.appendChild(openRow);
+        section.appendChild(hint);
+        return section;
+      }
+
+      function isRangeAfterNode(range, node) {
+        const position = node.compareDocumentPosition(range.startContainer);
+        return (position & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
+      }
+
+      function getPendingOpenMarker(doc) {
+        return doc.querySelector('section.pending-open[data-tag]');
+      }
+
       function getVisualInsertDepth(range, doc) {
         let node = range.commonAncestorContainer;
         if (node.nodeType !== Node.ELEMENT_NODE) {
@@ -899,37 +933,60 @@ APP_HTML = r"""
           return;
         }
 
-        const tagName = promptForXmlTag();
-        if (!tagName) {
-          return;
-        }
-
         const selection = doc.getSelection();
         if (!selection || selection.rangeCount === 0) {
           return;
         }
 
-        const range = selection.getRangeAt(0);
-        const contents = doc.createDocumentFragment();
-        const depth = getVisualInsertDepth(range, doc);
-
+        const range = selection.getRangeAt(0).cloneRange();
         if (!range.collapsed) {
-          contents.appendChild(range.extractContents());
+          range.collapse(true);
         }
 
-        const tagBlock = createXmlTagBlock(doc, tagName, contents, depth);
-        range.insertNode(tagBlock);
+        const pending = state.pendingXmlTag;
+        if (!pending) {
+          const tagName = promptForXmlTag();
+          if (!tagName) {
+            return;
+          }
 
-        selection.removeAllRanges();
-        const newRange = doc.createRange();
-        const editableContent = tagBlock.querySelector('.text');
-        if (editableContent) {
-          newRange.selectNodeContents(editableContent);
-        } else {
-          newRange.selectNodeContents(tagBlock);
+          const depth = getVisualInsertDepth(range, doc);
+          const marker = createPendingXmlOpenMarker(doc, tagName, depth);
+          range.insertNode(marker);
+
+          const afterRange = doc.createRange();
+          afterRange.setStartAfter(marker);
+          afterRange.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(afterRange);
+
+          state.pendingXmlTag = { name: tagName };
+          setStatus(`Pending <${tagName}>...`, state.currentPath || 'No file loaded.');
+          return;
         }
-        selection.addRange(newRange);
 
+        const marker = getPendingOpenMarker(doc);
+        if (!marker) {
+          state.pendingXmlTag = null;
+          return;
+        }
+
+        if (!isRangeAfterNode(range, marker)) {
+          window.alert('Place the cursor after the opening tag before closing it.');
+          return;
+        }
+
+        const wrapRange = doc.createRange();
+        wrapRange.setStartAfter(marker);
+        wrapRange.setEnd(range.startContainer, range.startOffset);
+
+        const contents = wrapRange.extractContents();
+        const depth = getVisualInsertDepth(range, doc);
+        const finalBlock = createXmlTagBlock(doc, pending.name, contents, depth);
+
+        marker.parentNode.replaceChild(finalBlock, marker);
+
+        state.pendingXmlTag = null;
         setDirty(true);
         refreshSafeStructureFromVisual();
       }
@@ -1045,7 +1102,7 @@ APP_HTML = r"""
       }
 
       function activeMenuItems() {
-        return [
+        const items = [
           { type: 'item', label: 'Undo', command: 'undo' },
           { type: 'item', label: 'Redo', command: 'redo' },
           { type: 'separator' },
@@ -1065,9 +1122,14 @@ APP_HTML = r"""
           { type: 'separator' },
           { type: 'item', label: 'Bulleted list', command: 'insertUnorderedList' },
           { type: 'item', label: 'Numbered list', command: 'insertOrderedList' },
-          { type: 'separator' },
-          { type: 'item', label: 'Insert XML Tag', command: 'insertXmlTag' },
         ];
+        items.push({ type: 'separator' });
+        if (state.pendingXmlTag) {
+          items.push({ type: 'item', label: `Close XML Tag (${state.pendingXmlTag.name})`, command: 'insertXmlTag' });
+        } else {
+          items.push({ type: 'item', label: 'Insert XML Tag', command: 'insertXmlTag' });
+        }
+        return items;
       }
 
       function activeSelectionState(target) {

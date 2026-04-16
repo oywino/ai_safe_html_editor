@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    
+    {
+      "name": "Run AI-Safe HTML Editor",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/ai_safe_html_editor.py",
+      "python": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    }
+  ]
+}

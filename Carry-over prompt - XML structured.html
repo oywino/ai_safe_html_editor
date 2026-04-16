@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Carry-over prompt — XML-tagged version</title>
+    <style>
+  :root {
+    --bg: #f6f7fb;
+    --panel: #ffffff;
+    --border: #d7ddea;
+    --border-strong: #aeb9cf;
+    --text: #1f2937;
+    --muted: #5b6474;
+    --tagbg: #eef3ff;
+    --tagtext: #244178;
+    --shadow: 0 1px 3px rgba(0,0,0,.05);
+  }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 28px 20px 40px; }
+  h1 { font-size: 1.8rem; margin: 0 0 8px; }
+  .subtitle { color: var(--muted); margin: 0 0 24px; }
+  .legend {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .legend p { margin: 0; color: var(--muted); }
+  .node {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--border-strong);
+    border-radius: 14px;
+    margin: 12px 0;
+    padding: 12px 14px;
+    box-shadow: var(--shadow);
+  }
+  .level-0 { border-left-color: #6f87b8; }
+  .level-1 { border-left-color: #8197c2; }
+  .level-2 { border-left-color: #93a8cc; }
+  .level-3 { border-left-color: #a4b8d5; }
+  .level-4 { border-left-color: #b6c8de; }
+  .level-5, .level-6 { border-left-color: #c7d8e7; }
+  .tag-row { margin-bottom: 8px; }
+  .tag-row.closing { margin-top: 10px; margin-bottom: 0; }
+  .tag-name {
+    display: inline-block;
+    background: var(--tagbg);
+    color: var(--tagtext);
+    border: 1px solid #d6e3ff;
+    border-radius: 999px;
+    padding: 3px 10px;
+    font: 600 13px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    word-break: break-word;
+  }
+  .text, .tail-text {
+    white-space: pre-wrap;
+    margin: 8px 0;
+  }
+  .text.intro { color: var(--muted); }
+  .children {
+    margin-left: 14px;
+    padding-left: 12px;
+    border-left: 2px dashed #dbe3f1;
+  }
+  @media print {
+    .page { max-width: none; padding: 0; }
+    .node, .legend { box-shadow: none; }
+    body { background: white; }
+  }
+</style>
+  </head>
+  <body>
+    <main class="page">
+      <h1>Carry-over prompt</h1>
+      <section class="node level-0" data-tag="prompt">
+        <div class="tag-row"><span class="tag-name">&lt;prompt&gt;</span></div>
+        <div class="children">
+          <section class="node level-1" data-tag="continuation_request">
+            <div class="tag-row"><span class="tag-name">&lt;continuation_request&gt;</span></div>
+            <div class="text">I am continuing a technical software development project with you as my AI assistant.
+Load the following context and follow the practices below.
+This prompt summarizes where we’ve come from up to v0.7.0
+(contract enforcement, Steps 1–10) and what’s next for smooth continuation.</div>
+            <div class="tag-row closing"><span class="tag-name">&lt;/continuation_request&gt;</span></div>
+          </section>
+          <section class="node level-1" data-tag="project_context">
+            <div class="tag-row"><span class="tag-name">&lt;project_context&gt;</span></div>
+            <div class="children">
+              <section class="node level-2" data-tag="project_identity">
+                <div class="tag-row"><span class="tag-name">&lt;project_identity&gt;</span></div>
+                <div class="children">
+                  <section class="node level-3" data-tag="project_name">
+                    <div class="tag-row"><span class="tag-name">&lt;project_name&gt;</span></div>
+                    <div class="text">Squeezebox Controller (Logitech Jive hardware, ARM9/S3C2412)</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/project_name&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="solution_name">
+                    <div class="tag-row"><span class="tag-name">&lt;solution_name&gt;</span></div>
+                    <div class="text">ha-remote-armv5</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/solution_name&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="goal">
+                    <div class="tag-row"><span class="tag-name">&lt;goal&gt;</span></div>
+                    <div class="text">Transform the Logitech Squeezebox handheld remote into a Home Assistant remote control device
+        comparable to Astrion and Unfolded Circle.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/goal&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="hardware">
+                    <div class="tag-row"><span class="tag-name">&lt;hardware&gt;</span></div>
+                    <div class="children">
+                      <section class="node level-4" data-tag="display">
+                        <div class="tag-row"><span class="tag-name">&lt;display&gt;</span></div>
+                        <div class="text">2.4" 240x320 RGB565 LCD</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/display&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="controls">
+                        <div class="tag-row"><span class="tag-name">&lt;controls&gt;</span></div>
+                        <div class="text">Mechanical scroll wheel + 10 backlit buttons</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/controls&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="soc">
+                        <div class="tag-row"><span class="tag-name">&lt;soc&gt;</span></div>
+                        <div class="text">Samsung ARM9 (S3C2412 @ 200 MHz)</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/soc&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="memory">
+                        <div class="tag-row"><span class="tag-name">&lt;memory&gt;</span></div>
+                        <div class="text">64MB NAND + 64MB SDRAM</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/memory&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="network">
+                        <div class="tag-row"><span class="tag-name">&lt;network&gt;</span></div>
+                        <div class="text">802.11b/g WiFi</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/network&gt;</span></div>
+                      </section>
+                      <section class="node level-4"
+                        data-tag="peripherals">
+                        <div class="tag-row"><span class="tag-name">&lt;peripherals&gt;</span></div>
+                        <div class="text">IR; accelerometer; SD slot; charging stand; expansion connector</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/peripherals&gt;</span></div>
+                      </section>
+                    </div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/hardware&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="architecture">
+                    <div class="tag-row"><span class="tag-name">&lt;architecture&gt;</span></div>
+                    <div class="children">
+                      <section class="node level-4" data-tag="part">
+                        <div class="tag-row"><span class="tag-name">&lt;part
+                            id="1"&gt;</span></div>
+                        <div class="text">Custom firmware communicating with Home Assistant over WiFi</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/part&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="part">
+                        <div class="tag-row"><span class="tag-name">&lt;part
+                            id="2"&gt;</span></div>
+                        <div class="text">Custom Home Assistant integration (RosCard-like)</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/part&gt;</span></div>
+                      </section>
+                    </div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/architecture&gt;</span></div>
+                  </section>
+                  <section class="node level-3"
+                    data-tag="minimum_card_types">
+                    <div class="tag-row"><span class="tag-name">&lt;minimum_card_types&gt;</span></div>
+                    <div class="children">
+                      <section class="node level-4" data-tag="card_type">
+                        <div class="tag-row"><span class="tag-name">&lt;card_type&gt;</span></div>
+                        <div class="text">TV</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/card_type&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="card_type">
+                        <div class="tag-row"><span class="tag-name">&lt;card_type&gt;</span></div>
+                        <div class="text">Light</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/card_type&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="card_type">
+                        <div class="tag-row"><span class="tag-name">&lt;card_type&gt;</span></div>
+                        <div class="text">Fan</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/card_type&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="card_type">
+                        <div class="tag-row"><span class="tag-name">&lt;card_type&gt;</span></div>
+                        <div class="text">Scene</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/card_type&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="card_type">
+                        <div class="tag-row"><span class="tag-name">&lt;card_type&gt;</span></div>
+                        <div class="text">Media Player</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/card_type&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="card_type">
+                        <div class="tag-row"><span class="tag-name">&lt;card_type&gt;</span></div>
+                        <div class="text">Climate</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/card_type&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="card_type">
+                        <div class="tag-row"><span class="tag-name">&lt;card_type&gt;</span></div>
+                        <div class="text">Cover</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/card_type&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="card_type">
+                        <div class="tag-row"><span class="tag-name">&lt;card_type&gt;</span></div>
+                        <div class="text">Switch</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/card_type&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="card_type">
+                        <div class="tag-row"><span class="tag-name">&lt;card_type&gt;</span></div>
+                        <div class="text">Weather</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/card_type&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="card_type">
+                        <div class="tag-row"><span class="tag-name">&lt;card_type&gt;</span></div>
+                        <div class="text">Host</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/card_type&gt;</span></div>
+                      </section>
+                    </div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/minimum_card_types&gt;</span></div>
+                  </section>
+                </div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/project_identity&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="working_identity">
+                <div class="tag-row"><span class="tag-name">&lt;working_identity&gt;</span></div>
+                <div class="children">
+                  <section class="node level-3" data-tag="language">
+                    <div class="tag-row"><span class="tag-name">&lt;language&gt;</span></div>
+                    <div class="text">English</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/language&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="standards">
+                    <div class="tag-row"><span class="tag-name">&lt;standards&gt;</span></div>
+                    <div class="text">Principled, methodical, audit-driven; mechanical, reproducible edits; zero speculation;
+        minimal exported surfaces; encapsulated globals; explicit hooks for loose coupling.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/standards&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="process">
+                    <div class="tag-row"><span class="tag-name">&lt;process&gt;</span></div>
+                    <div class="text">Every change must be traceable, reversible, and confirmed against real hardware output,
+        not logs alone. Use annotated proposals, relocation tables, and confirmation-based workflows.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/process&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="no_invention">
+                    <div class="tag-row"><span class="tag-name">&lt;no_invention&gt;</span></div>
+                    <div class="text">Work only from provided artifacts. Plans must reflect true end goals, not merely technical feasibility.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/no_invention&gt;</span></div>
+                  </section>
+                  <section class="node level-3"
+                    data-tag="communication_style">
+                    <div class="tag-row"><span class="tag-name">&lt;communication_style&gt;</span></div>
+                    <div class="text">Direct, context-rich, audit-friendly.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/communication_style&gt;</span></div>
+                  </section>
+                </div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/working_identity&gt;</span></div>
+              </section>
+              <section class="node level-2"
+                data-tag="baseline_environment">
+                <div class="tag-row"><span class="tag-name">&lt;baseline_environment&gt;</span></div>
+                <div class="children">
+                  <section class="node level-3" data-tag="baseline">
+                    <div class="tag-row"><span class="tag-name">&lt;baseline&gt;</span></div>
+                    <div class="text">Phase A complete: framebuffer and input takeover, watchdog considerations,
+        and restore path to stock UI.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/baseline&gt;</span></div>
+                  </section>
+                  <section class="node level-3"
+                    data-tag="build_environment">
+                    <div class="tag-row"><span class="tag-name">&lt;build_environment&gt;</span></div>
+                    <div class="text">QNAP → Ubuntu container; Buildroot toolchain at /workspace/output/host/bin;
+        work at /workspace/buildroot.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/build_environment&gt;</span></div>
+                  </section>
+                  <section class="node level-3"
+                    data-tag="device_control">
+                    <div class="tag-row"><span class="tag-name">&lt;device_control&gt;</span></div>
+                    <div class="text">SSH access is available; Jive can be stopped temporarily for full control;
+        power-cycle reverts to the stock system.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/device_control&gt;</span></div>
+                  </section>
+                </div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/baseline_environment&gt;</span></div>
+              </section>
+            </div>
+            <div class="tag-row closing"><span class="tag-name">&lt;/project_context&gt;</span></div>
+          </section>
+          <section class="node level-1"
+            data-tag="assistant_operating_principles">
+            <div class="tag-row"><span class="tag-name">&lt;assistant_operating_principles&gt;</span></div>
+            <div class="children">
+              <section class="node level-2" data-tag="principle">
+                <div class="tag-row"><span class="tag-name">&lt;principle
+                    id="1" name="respect_audit_trail"&gt;</span></div>
+                <div class="children">
+                  <section class="node level-3" data-tag="rule">
+                    <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                    <div class="text">Every change must be traceable, reversible, and confirmed by hardware output.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/rule&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="rule">
+                    <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                    <div class="text">Never speculate or invent details; work only from attached artifacts.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/rule&gt;</span></div>
+                  </section>
+                </div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/principle&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="principle">
+                <div class="tag-row"><span class="tag-name">&lt;principle
+                    id="2" name="follow_tick_marks"&gt;</span></div>
+                <div class="children">
+                  <section class="node level-3" data-tag="rule">
+                    <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                    <div class="text">Completed steps are [x]. Pending steps are [ ].</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/rule&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="rule">
+                    <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                    <div class="text">Progress must be logged by updating PLAN, STATE, and CHANGELOG consistently.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/rule&gt;</span></div>
+                  </section>
+                </div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/principle&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="principle">
+                <div class="tag-row"><span class="tag-name">&lt;principle
+                    id="3" name="step_discipline"&gt;</span></div>
+                <div class="children">
+                  <section class="node level-3" data-tag="rule">
+                    <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                    <div class="text">Work only on the next pending step unless TRAIL OFF is explicitly invoked.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/rule&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="rule">
+                    <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                    <div class="text">Substeps inside Step 7 are already complete; do not reopen them.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/rule&gt;</span></div>
+                  </section>
+                </div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/principle&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="principle">
+                <div class="tag-row"><span class="tag-name">&lt;principle
+                    id="4" name="document_hygiene"&gt;</span></div>
+                <div class="children">
+                  <section class="node level-3" data-tag="rule">
+                    <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                    <div class="text">Normalize headings, grouped containers, tick-marks, and consistent formatting.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/rule&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="rule">
+                    <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                    <div class="text">PLAN = roadmap, STATE = status, CHANGELOG = history, RULES = governance.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/rule&gt;</span></div>
+                  </section>
+                </div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/principle&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="principle">
+                <div class="tag-row"><span class="tag-name">&lt;principle
+                    id="5" name="communication_style"&gt;</span></div>
+                <div class="children">
+                  <section class="node level-3" data-tag="rule">
+                    <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                    <div class="text">Provide annotated proposals, relocation tables, and confirmation-based workflows.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/rule&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="rule">
+                    <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                    <div class="text">Always confirm before moving code or editing documents.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/rule&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="rule">
+                    <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                    <div class="text">Avoid ambiguity; keep responses audit-friendly.</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/rule&gt;</span></div>
+                  </section>
+                </div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/principle&gt;</span></div>
+              </section>
+            </div>
+            <div class="tag-row closing"><span class="tag-name">&lt;/assistant_operating_principles&gt;</span></div>
+          </section>
+          <section class="node level-1" data-tag="continuity_checklist">
+            <div class="tag-row"><span class="tag-name">&lt;continuity_checklist&gt;</span></div>
+            <div class="children">
+              <section class="node level-2" data-tag="item">
+                <div class="tag-row"><span class="tag-name">&lt;item
+                    status="complete"&gt;</span></div>
+                <div class="text">Load all four attached documents.</div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/item&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="item">
+                <div class="tag-row"><span class="tag-name">&lt;item
+                    status="complete"&gt;</span></div>
+                <div class="text">Anchor on PLAN tick-marks to know what’s done vs pending.</div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/item&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="item">
+                <div class="tag-row"><span class="tag-name">&lt;item
+                    status="complete"&gt;</span></div>
+                <div class="text">Use STATE to answer "current status."</div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/item&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="item">
+                <div class="tag-row"><span class="tag-name">&lt;item
+                    status="complete"&gt;</span></div>
+                <div class="text">Use CHANGELOG to answer "what changed."</div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/item&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="item">
+                <div class="tag-row"><span class="tag-name">&lt;item
+                    status="complete"&gt;</span></div>
+                <div class="text">Use RULES to answer "how to proceed."</div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/item&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="item">
+                <div class="tag-row"><span class="tag-name">&lt;item
+                    status="complete"&gt;</span></div>
+                <div class="text">Never speculate; always confirm with artifacts.</div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/item&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="item">
+                <div class="tag-row"><span class="tag-name">&lt;item
+                    status="complete"&gt;</span></div>
+                <div class="text">Treat Step 7 as complete; next active work begins at Step 8.</div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/item&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="item">
+                <div class="tag-row"><span class="tag-name">&lt;item
+                    status="complete"&gt;</span></div>
+                <div class="text">Maintain audit trail: update PLAN, STATE, CHANGELOG after each verified change.</div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/item&gt;</span></div>
+              </section>
+            </div>
+            <div class="tag-row closing"><span class="tag-name">&lt;/continuity_checklist&gt;</span></div>
+          </section>
+          <section class="node level-1" data-tag="current_status">
+            <div class="tag-row"><span class="tag-name">&lt;current_status
+                as_of="Dec 2025"&gt;</span></div>
+            <div class="children">
+              <section class="node level-2" data-tag="completed_scope">
+                <div class="tag-row"><span class="tag-name">&lt;completed_scope&gt;</span></div>
+                <div class="text">Contract enforcement complete through Steps 1–10.</div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/completed_scope&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="next_pending_work">
+                <div class="tag-row"><span class="tag-name">&lt;next_pending_work&gt;</span></div>
+                <div class="children">
+                  <section class="node level-3" data-tag="step">
+                    <div class="tag-row"><span class="tag-name">&lt;step
+                        number="8"&gt;</span></div>
+                    <div class="text">RosCard integration decision (adopt vs fork)</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/step&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="step">
+                    <div class="tag-row"><span class="tag-name">&lt;step
+                        number="9"&gt;</span></div>
+                    <div class="text">HA connection layer (WebSocket + LLAT)</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/step&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="step">
+                    <div class="tag-row"><span class="tag-name">&lt;step
+                        number="10"&gt;</span></div>
+                    <div class="text">State cache + rate limiting</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/step&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="step">
+                    <div class="tag-row"><span class="tag-name">&lt;step
+                        number="11"&gt;</span></div>
+                    <div class="text">Service call pipeline</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/step&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="step">
+                    <div class="tag-row"><span class="tag-name">&lt;step
+                        number="12"&gt;</span></div>
+                    <div class="text">Minimal demo UI (PoC)</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/step&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="step">
+                    <div class="tag-row"><span class="tag-name">&lt;step
+                        number="13"&gt;</span></div>
+                    <div class="text">Configuration loading</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/step&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="step">
+                    <div class="tag-row"><span class="tag-name">&lt;step
+                        number="14"&gt;</span></div>
+                    <div class="text">Metrics + debug</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/step&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="step">
+                    <div class="tag-row"><span class="tag-name">&lt;step
+                        number="15"&gt;</span></div>
+                    <div class="text">Package + deploy documentation</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/step&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="step">
+                    <div class="tag-row"><span class="tag-name">&lt;step
+                        number="16"&gt;</span></div>
+                    <div class="text">Phase B deliverable</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/step&gt;</span></div>
+                  </section>
+                </div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/next_pending_work&gt;</span></div>
+              </section>
+            </div>
+            <div class="tag-row closing"><span class="tag-name">&lt;/current_status&gt;</span></div>
+          </section>
+          <section class="node level-1" data-tag="document_usage">
+            <div class="tag-row"><span class="tag-name">&lt;document_usage&gt;</span></div>
+            <div class="children">
+              <section class="node level-2" data-tag="summary">
+                <div class="tag-row"><span class="tag-name">&lt;summary&gt;</span></div>
+                <div class="text">PLAN shows the roadmap<br>STATE shows current progress<br>CHANGELOG shows history
+RULES enforce discipline<br>This guide explains how to use them together.</div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/summary&gt;</span></div>
+              </section>
+              <section class="node level-2"
+                data-tag="attached_documents">
+                <div class="tag-row"><span class="tag-name">&lt;attached_documents&gt;</span></div>
+                <div class="children">
+                  <section class="node level-3" data-tag="document">
+                    <div class="tag-row"><span class="tag-name">&lt;document
+                        role="history"&gt;</span></div>
+                    <div class="text">CHANGELOG_PhaseB.md (latest entries up to v0.7.0)</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/document&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="document">
+                    <div class="tag-row"><span class="tag-name">&lt;document
+                        role="roadmap"&gt;</span></div>
+                    <div class="text">PROJECT_PLAN.md (updated milestones)</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/document&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="document">
+                    <div class="tag-row"><span class="tag-name">&lt;document
+                        role="status"&gt;</span></div>
+                    <div class="text">PROJECT_STATE.md (current state at v0.7.0)</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/document&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="document">
+                    <div class="tag-row"><span class="tag-name">&lt;document
+                        role="governance"&gt;</span></div>
+                    <div class="text">PROJECT_RULES.md (working rules; do not duplicate)</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/document&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="document">
+                    <div class="tag-row"><span class="tag-name">&lt;document
+                        role="supporting_note"&gt;</span></div>
+                    <div class="text">README_HARDLINKS.txt</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/document&gt;</span></div>
+                  </section>
+                  <section class="node level-3" data-tag="document">
+                    <div class="tag-row"><span class="tag-name">&lt;document
+                        role="supporting_note"&gt;</span></div>
+                    <div class="text">folder_layout.md</div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/document&gt;</span></div>
+                  </section>
+                </div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/attached_documents&gt;</span></div>
+              </section>
+              <section class="node level-2"
+                data-tag="how_to_use_documents">
+                <div class="tag-row"><span class="tag-name">&lt;how_to_use_documents&gt;</span></div>
+                <div class="children">
+                  <section class="node level-3"
+                    data-tag="document_guide">
+                    <div class="tag-row"><span class="tag-name">&lt;document_guide
+                        name="PLAN" file="PROJECT_PLAN_phaseB.md"&gt;</span></div>
+                    <div class="children">
+                      <section class="node level-4"
+                        data-tag="definition">
+                        <div class="tag-row"><span class="tag-name">&lt;definition&gt;</span></div>
+                        <div class="text">Defines the roadmap.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/definition&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="rule">
+                        <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                        <div class="text">Main steps 1–16 are the backbone of Phase B.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/rule&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="rule">
+                        <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                        <div class="text">Step 7 contains relocation substeps (1–20) for contract enforcement and hygiene.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/rule&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="rule">
+                        <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                        <div class="text">Tick-marks indicate completed vs pending steps.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/rule&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="rule">
+                        <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                        <div class="text">Always treat PLAN as the authoritative sequence.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/rule&gt;</span></div>
+                      </section>
+                    </div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/document_guide&gt;</span></div>
+                  </section>
+                  <section class="node level-3"
+                    data-tag="document_guide">
+                    <div class="tag-row"><span class="tag-name">&lt;document_guide
+                        name="STATE" file="PROJECT_STATE.md"&gt;</span></div>
+                    <div class="children">
+                      <section class="node level-4"
+                        data-tag="definition">
+                        <div class="tag-row"><span class="tag-name">&lt;definition&gt;</span></div>
+                        <div class="text">Defines current status.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/definition&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="rule">
+                        <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                        <div class="text">Mirrors PLAN with tick-marks for progress.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/rule&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="rule">
+                        <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                        <div class="text">Records what is verified on hardware.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/rule&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="rule">
+                        <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                        <div class="text">Use STATE to answer "where are we now?" questions.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/rule&gt;</span></div>
+                      </section>
+                    </div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/document_guide&gt;</span></div>
+                  </section>
+                  <section class="node level-3"
+                    data-tag="document_guide">
+                    <div class="tag-row"><span class="tag-name">&lt;document_guide
+                        name="CHANGELOG" file="CHANGELOG_PhaseB.md"&gt;</span></div>
+                    <div class="children">
+                      <section class="node level-4"
+                        data-tag="definition">
+                        <div class="tag-row"><span class="tag-name">&lt;definition&gt;</span></div>
+                        <div class="text">Defines history.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/definition&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="rule">
+                        <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                        <div class="text">Chronological record of snapshots from v0.3.0 onward.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/rule&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="rule">
+                        <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                        <div class="text">Each entry describes what changed, what was verified, and observed results.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/rule&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="rule">
+                        <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                        <div class="text">Use CHANGELOG to trace how we got here.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/rule&gt;</span></div>
+                      </section>
+                    </div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/document_guide&gt;</span></div>
+                  </section>
+                  <section class="node level-3"
+                    data-tag="document_guide">
+                    <div class="tag-row"><span class="tag-name">&lt;document_guide
+                        name="RULES" file="PROJECT_RULES.md"&gt;</span></div>
+                    <div class="children">
+                      <section class="node level-4"
+                        data-tag="definition">
+                        <div class="tag-row"><span class="tag-name">&lt;definition&gt;</span></div>
+                        <div class="text">Defines governance.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/definition&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="rule">
+                        <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                        <div class="text">Change discipline: one change per iteration, snapshot + changelog update.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/rule&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="rule">
+                        <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                        <div class="text">Scope contracts: each module owns its responsibilities, no drift.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/rule&gt;</span></div>
+                      </section>
+                      <section class="node level-4" data-tag="rule">
+                        <div class="tag-row"><span class="tag-name">&lt;rule&gt;</span></div>
+                        <div class="text">Use RULES to enforce auditability and prevent speculation.</div>
+                        <div class="tag-row closing"><span
+                            class="tag-name">&lt;/rule&gt;</span></div>
+                      </section>
+                    </div>
+                    <div class="tag-row closing"><span class="tag-name">&lt;/document_guide&gt;</span></div>
+                  </section>
+                </div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/how_to_use_documents&gt;</span></div>
+              </section>
+            </div>
+            <div class="tag-row closing"><span class="tag-name">&lt;/document_usage&gt;</span></div>
+          </section>
+          <section class="node level-1" data-tag="working_mode">
+            <div class="tag-row"><span class="tag-name">&lt;working_mode&gt;</span></div>
+            <div class="children">
+              <section class="node level-2" data-tag="request_style">
+                <div class="tag-row"><span class="tag-name">&lt;request_style&gt;</span></div>
+                <div class="text">Provide annotated proposals, relocation tables, minimal exported surfaces, and explicit hooks.
+Avoid invention. Confirm with hardware output.</div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/request_style&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="task_execution">
+                <div class="tag-row"><span class="tag-name">&lt;task_execution&gt;</span></div>
+                <div class="text">Mechanical, reversible edits; each step ends with acceptance verification and a snapshot tag.</div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/task_execution&gt;</span></div>
+              </section>
+              <section class="node level-2" data-tag="next_action">
+                <div class="tag-row"><span class="tag-name">&lt;next_action&gt;</span></div>
+                <div class="text">Begin Step 11 — Framebuffer split (fb.c/.h) per the acceptance criteria and snapshot v0.7.1-fb-split.</div>
+                <div class="tag-row closing"><span class="tag-name">&lt;/next_action&gt;</span></div>
+              </section>
+            </div>
+            <div class="tag-row closing"><span class="tag-name">&lt;/working_mode&gt;</span></div>
+          </section>
+          <section class="node level-1"
+            data-tag="assistant_response_request">
+            <div class="tag-row"><span class="tag-name">&lt;assistant_response_request&gt;</span></div>
+            <div class="text">Please confirm when ready.</div>
+            <div class="tag-row closing"><span class="tag-name">&lt;/assistant_response_request&gt;</span></div>
+          </section>
+        </div>
+        <div class="tag-row closing"><span class="tag-name">&lt;/prompt&gt;</span></div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -344,7 +344,6 @@ APP_HTML = r"""
       <button id="open-btn">Open…</button>
       <button id="save-btn" class="primary">Save</button>
       <button id="save-as-btn">Save As…</button>
-      <button id="insert-tag-btn">Insert XML Tag</button>
     </div>
     <div class="toolbar-separator"></div>
     <div class="toolbar-group">
@@ -422,7 +421,6 @@ APP_HTML = r"""
         openBtn: document.getElementById('open-btn'),
         saveBtn: document.getElementById('save-btn'),
         saveAsBtn: document.getElementById('save-as-btn'),
-        insertTagBtn: document.getElementById('insert-tag-btn'),
         safeTab: document.getElementById('safe-tab'),
         visualTab: document.getElementById('visual-tab'),
         safeTabTop: document.getElementById('safe-tab-top'),
@@ -1067,6 +1065,8 @@ APP_HTML = r"""
           { type: 'separator' },
           { type: 'item', label: 'Bulleted list', command: 'insertUnorderedList' },
           { type: 'item', label: 'Numbered list', command: 'insertOrderedList' },
+          { type: 'separator' },
+          { type: 'item', label: 'Insert XML Tag', command: 'insertXmlTag' },
         ];
       }
 
@@ -1141,6 +1141,10 @@ APP_HTML = r"""
 
       function executeMenuAction(target, item) {
         if (target === 'visual') {
+          if (item.command === 'insertXmlTag') {
+            insertXmlTagAtCursor();
+            return;
+          }
           if (item.block) {
             visualFormatBlock(item.block);
           } else {
@@ -1188,7 +1192,6 @@ APP_HTML = r"""
         els.openBtn.addEventListener('click', () => openDocument());
         els.saveBtn.addEventListener('click', () => saveDocument(false));
         els.saveAsBtn.addEventListener('click', () => saveDocument(true));
-        els.insertTagBtn.addEventListener('click', () => insertXmlTagAtCursor());
         els.safeTab.addEventListener('click', () => switchMode('safe'));
         els.safeTabTop.addEventListener('click', () => switchMode('safe'));
         els.visualTab.addEventListener('click', () => switchMode('visual'));

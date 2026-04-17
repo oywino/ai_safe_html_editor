@@ -255,14 +255,13 @@ APP_HTML = r"""
     }
 
     .pending-open {
-      display: inline-flex;
-      align-items: center;
-      padding: 2px 6px;
-      margin: 1px 0;
-      border: 1px dashed #7aa7d9;
-      border-radius: 999px;
-      color: #1f4e8a;
-      font: 12px var(--font-mono);
+      display: inline;
+      padding: 0;
+      margin: 0;
+      border: none;
+      background: transparent;
+      color: inherit;
+      font: inherit;
       user-select: none;
     }
 
@@ -363,7 +362,7 @@ APP_HTML = r"""
       <button id="visual-tab-top">True WYSIWYG Mode</button>
     </div>
     <div class="toolbar-group">
-      <span id="app-version" class="app-version">v0.1.3</span>
+      <span id="app-version" class="app-version">v0.1.4</span>
     </div>
   </div>
 

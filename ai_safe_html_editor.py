@@ -364,8 +364,7 @@ APP_HTML = r"""
       <button id="visual-tab-top">True WYSIWYG Mode</button>
     </div>
     <div class="toolbar-group">
-      <span id="app-version" class="app-version">v0.1.1</span>
-    </div>
+      <span id="app-version" class="app-version">v0.1.2</span>
   </div>
 
   <div id="modebar">
@@ -423,7 +422,7 @@ APP_HTML = r"""
         'area','base','br','col','embed','hr','img','input','link','meta','source','track','wbr'
       ]);
 
-      const APP_VERSION = '0.1.1';
+      const APP_VERSION = '0.1.2';
       const state = {
         currentMode: 'safe',
         currentPath: null,
@@ -898,25 +897,20 @@ APP_HTML = r"""
         const children = doc.createElement('div');
         children.className = 'children';
 
-        const textBlock = doc.createElement('div');
-        textBlock.className = 'text';
-        textBlock.contentEditable = 'true';
-
         if (contents && contents.hasChildNodes()) {
           const containsNestedNodes = Array.from(contents.childNodes).some((node) => node.nodeType === Node.ELEMENT_NODE && node.classList.contains('node'));
           if (containsNestedNodes) {
             children.appendChild(contents);
-          } else {
-            if (!contents.textContent.trim()) {
-              textBlock.innerHTML = '<br>';
-            } else {
-              textBlock.appendChild(contents);
-            }
+          } else if (contents.textContent.trim()) {
+            const textBlock = doc.createElement('div');
+            textBlock.className = 'text';
+            textBlock.contentEditable = 'true';
+            textBlock.appendChild(contents);
             children.appendChild(textBlock);
           }
-        } else {
-          textBlock.innerHTML = '<br>';
-          children.appendChild(textBlock);
+        }
+        if (children.hasChildNodes()) {
+          section.appendChild(children);
         }
 
         const closingRow = doc.createElement('div');

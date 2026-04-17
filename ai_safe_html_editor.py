@@ -261,7 +261,6 @@ APP_HTML = r"""
       margin: 1px 0;
       border: 1px dashed #7aa7d9;
       border-radius: 999px;
-      background: #e8f2ff;
       color: #1f4e8a;
       font: 12px var(--font-mono);
       user-select: none;
@@ -364,7 +363,7 @@ APP_HTML = r"""
       <button id="visual-tab-top">True WYSIWYG Mode</button>
     </div>
     <div class="toolbar-group">
-      <span id="app-version" class="app-version">v0.1.2</span>
+      <span id="app-version" class="app-version">v0.1.3</span>
     </div>
   </div>
 

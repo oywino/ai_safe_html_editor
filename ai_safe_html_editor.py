@@ -254,6 +254,19 @@ APP_HTML = r"""
       user-select: none;
     }
 
+    .pending-open {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 6px;
+      margin: 1px 0;
+      border: 1px dashed #7aa7d9;
+      border-radius: 999px;
+      background: #e8f2ff;
+      color: #1f4e8a;
+      font: 12px var(--font-mono);
+      user-select: none;
+    }
+
     blockquote {
       border-left: 4px solid #d0d7de;
       margin-left: 0;
@@ -351,7 +364,7 @@ APP_HTML = r"""
       <button id="visual-tab-top">True WYSIWYG Mode</button>
     </div>
     <div class="toolbar-group">
-      <span id="app-version" class="app-version">v0.1.1</span>
+      <span id="app-version" class="app-version">v0.1.2</span>
     </div>
   </div>
 
@@ -834,6 +847,19 @@ APP_HTML = r"""
         return 0;
       }
 
+      function getPendingOpenMarker(doc) {
+        return doc.querySelector('.pending-open[data-tag]');
+      }
+
+      function createPendingXmlOpenMarker(doc, tagName, depth) {
+        const marker = doc.createElement('span');
+        marker.className = 'pending-open';
+        marker.dataset.tag = tagName;
+        marker.dataset.depth = String(depth);
+        marker.textContent = `<${tagName}>`;
+        return marker;
+      }
+
       function createXmlTagBlock(doc, tagName, contents, depth) {
         const section = doc.createElement('section');
         section.className = 'node';
@@ -902,39 +928,66 @@ APP_HTML = r"""
           return;
         }
 
-        const tagName = promptForXmlTag();
-        if (!tagName) {
-          return;
-        }
-
         const selection = doc.getSelection();
         if (!selection || selection.rangeCount === 0) {
           return;
         }
 
         const range = selection.getRangeAt(0);
-        const contents = doc.createDocumentFragment();
-        const depth = getVisualInsertDepth(range, doc);
+        const pending = getPendingOpenMarker(doc);
+        if (pending) {
+          const tagName = pending.dataset.tag;
+          const depth = parseInt(pending.dataset.depth, 10) || 0;
+          const wrapRange = doc.createRange();
+          const markerRange = doc.createRange();
+          markerRange.selectNode(pending);
 
-        if (!range.collapsed) {
-          contents.appendChild(range.extractContents());
+          if (markerRange.compareBoundaryPoints(Range.START_TO_START, range) <= 0) {
+            wrapRange.setStartAfter(pending);
+            wrapRange.setEnd(range.endContainer, range.endOffset);
+          } else {
+            wrapRange.setStart(range.startContainer, range.startOffset);
+            wrapRange.setEndBefore(pending);
+          }
+
+          const contents = doc.createDocumentFragment();
+          if (!wrapRange.collapsed) {
+            contents.appendChild(wrapRange.extractContents());
+          }
+
+          const tagBlock = createXmlTagBlock(doc, tagName, contents, depth);
+          pending.replaceWith(tagBlock);
+          selection.removeAllRanges();
+          const newRange = doc.createRange();
+          const editableContent = tagBlock.querySelector('.text');
+          if (editableContent) {
+            newRange.selectNodeContents(editableContent);
+          } else {
+            newRange.selectNode(tagBlock);
+          }
+          selection.addRange(newRange);
+          setDirty(true);
+          refreshSafeStructureFromVisual();
+          return;
         }
 
-        const tagBlock = createXmlTagBlock(doc, tagName, contents, depth);
-        range.insertNode(tagBlock);
+        const tagName = promptForXmlTag();
+        if (!tagName) {
+          return;
+        }
+
+        const depth = getVisualInsertDepth(range, doc);
+        const marker = createPendingXmlOpenMarker(doc, tagName, depth);
+        range.collapse(true);
+        range.insertNode(marker);
 
         selection.removeAllRanges();
         const newRange = doc.createRange();
-        const editableContent = tagBlock.querySelector('.text');
-        if (editableContent) {
-          newRange.selectNodeContents(editableContent);
-        } else {
-          newRange.selectNodeContents(tagBlock);
-        }
+        newRange.setStartAfter(marker);
+        newRange.collapse(true);
         selection.addRange(newRange);
 
         setDirty(true);
-        refreshSafeStructureFromVisual();
       }
 
       function getVisualDocument() {

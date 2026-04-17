@@ -255,14 +255,14 @@ APP_HTML = r"""
     }
 
     .pending-open {
-      display: inline;
+      display: contents;
       padding: 0;
       margin: 0;
       border: none;
       background: transparent;
       color: inherit;
       font: inherit;
-      user-select: none;
+      user-select: auto;
     }
 
     blockquote {
@@ -362,7 +362,7 @@ APP_HTML = r"""
       <button id="visual-tab-top">True WYSIWYG Mode</button>
     </div>
     <div class="toolbar-group">
-      <span id="app-version" class="app-version">v0.1.4</span>
+      <span id="app-version" class="app-version">v0.1.5</span>
     </div>
   </div>
 

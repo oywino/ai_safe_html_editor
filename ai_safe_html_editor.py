@@ -344,12 +344,14 @@ APP_HTML = r"""
       <button id="open-btn">Open…</button>
       <button id="save-btn" class="primary">Save</button>
       <button id="save-as-btn">Save As…</button>
-      <button id="insert-tag-btn">Insert XML Tag</button>
     </div>
     <div class="toolbar-separator"></div>
     <div class="toolbar-group">
       <button id="safe-tab-top">Safe Structure Mode</button>
       <button id="visual-tab-top">True WYSIWYG Mode</button>
+    </div>
+    <div class="toolbar-group">
+      <span id="app-version" class="app-version">v0.1.1</span>
     </div>
   </div>
 
@@ -422,7 +424,6 @@ APP_HTML = r"""
         openBtn: document.getElementById('open-btn'),
         saveBtn: document.getElementById('save-btn'),
         saveAsBtn: document.getElementById('save-as-btn'),
-        insertTagBtn: document.getElementById('insert-tag-btn'),
         safeTab: document.getElementById('safe-tab'),
         visualTab: document.getElementById('visual-tab'),
         safeTabTop: document.getElementById('safe-tab-top'),
@@ -1046,8 +1047,8 @@ APP_HTML = r"""
         }
       }
 
-      function activeMenuItems() {
-        return [
+      function activeMenuItems(target) {
+        const items = [
           { type: 'item', label: 'Undo', command: 'undo' },
           { type: 'item', label: 'Redo', command: 'redo' },
           { type: 'separator' },
@@ -1068,6 +1069,11 @@ APP_HTML = r"""
           { type: 'item', label: 'Bulleted list', command: 'insertUnorderedList' },
           { type: 'item', label: 'Numbered list', command: 'insertOrderedList' },
         ];
+        if (target === 'visual') {
+          items.push({ type: 'separator' });
+          items.push({ type: 'item', label: 'Insert XML Tag', command: 'insertXmlTag' });
+        }
+        return items;
       }
 
       function activeSelectionState(target) {
@@ -1084,7 +1090,7 @@ APP_HTML = r"""
 
       function renderContextMenu(target) {
         const selection = activeSelectionState(target);
-        const items = activeMenuItems();
+        const items = activeMenuItems(target);
         els.contextMenu.innerHTML = '';
         for (const item of items) {
           if (item.type === 'separator') {
@@ -1141,7 +1147,9 @@ APP_HTML = r"""
 
       function executeMenuAction(target, item) {
         if (target === 'visual') {
-          if (item.block) {
+          if (item.command === 'insertXmlTag') {
+            insertXmlTagAtCursor();
+          } else if (item.block) {
             visualFormatBlock(item.block);
           } else {
             visualExecCommand(item.command);
@@ -1188,7 +1196,6 @@ APP_HTML = r"""
         els.openBtn.addEventListener('click', () => openDocument());
         els.saveBtn.addEventListener('click', () => saveDocument(false));
         els.saveAsBtn.addEventListener('click', () => saveDocument(true));
-        els.insertTagBtn.addEventListener('click', () => insertXmlTagAtCursor());
         els.safeTab.addEventListener('click', () => switchMode('safe'));
         els.safeTabTop.addEventListener('click', () => switchMode('safe'));
         els.visualTab.addEventListener('click', () => switchMode('visual'));

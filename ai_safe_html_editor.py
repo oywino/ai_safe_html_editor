@@ -218,11 +218,11 @@ APP_HTML = r"""
     }
 
     .ai-tag-block {
-      border: 1px solid var(--safe-line);
+      border: none;
       background: transparent;
-      border-radius: 10px;
+      border-radius: 0;
       margin: 12px 0;
-      overflow: hidden;
+      overflow: visible;
       box-shadow: none;
     }
 
@@ -362,7 +362,7 @@ APP_HTML = r"""
       <button id="visual-tab-top">True WYSIWYG Mode</button>
     </div>
     <div class="toolbar-group">
-      <span id="app-version" class="app-version">v0.1.6</span>
+      <span id="app-version" class="app-version">v0.1.7</span>
     </div>
   </div>
 
